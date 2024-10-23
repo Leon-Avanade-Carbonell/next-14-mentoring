@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Installation
 
-## Getting Started
+### Next 14
 
-First, run the development server:
+For this mentoring session, we would be focusing on the use of Next 14. The time of writing, Next 15 just came out and it is using React 19 release candidate which is not supported by most of the libraries used in the sessions
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx create-next-app@14.2.14
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tanstack query would be the way we call the server components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install @tanstack/react-query
+```
+We need to wrap our application with a queryClient provider to allow the use of the tanstack queries
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<details>
+<summary>create a new file `app/components/providers.tsx`</summary>
 
-## Learn More
+```typescript
+"use client";
 
-To learn more about Next.js, take a look at the following resources:
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactNode } from "react";
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+const queryClient = new QueryClient();
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+type IProvidersProps = {
+  children: ReactNode;
+};
 
-## Deploy on Vercel
+function Providers({ children }: IProvidersProps) {
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+}
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export default Providers;
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</details>
+
+<br />
+
+In the app layout, wrap the body of the application
+
+<details>
+<summary>
+Changes in the `app/layout.tsx`
+</summary>
+
+```typescript
+<html lang="en">
+  <Providers>
+    <body className={inter.className}>{children}</body>
+  </Providers>
+</html>
+```
+
+</details>
+
+<br />
+
+## Optional DX libraries
+
+### prettier-eslint package and configuration
+
+Install the prettier-eslint package and add the configuration file to format the codes
+
+```bash
+npm install --save-dev prettier-eslint
+```
+
+Add the configuration file for prettier
+
+<details>
+<summary>
+Create a `.prettierrc` file</summary>
+
+```json
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true
+}
+```
+
+</details>
+
+<br/>
+
+### Tailwindcss extension for prettier
+
+Install the tailwind-prettier extension to sort your tailwind classes
+
+```bash
+npm install -D prettier prettier-plugin-tailwindcss
+```
+
+Update the `.prettierrc` file with the addition of
+
+```json
+{
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
+```
