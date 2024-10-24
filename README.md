@@ -13,6 +13,7 @@ Tanstack query would be the way we call the server components
 ```bash
 npm install @tanstack/react-query
 ```
+
 We need to wrap our application with a queryClient provider to allow the use of the tanstack queries
 
 <details>
@@ -53,7 +54,7 @@ Changes in the `app/layout.tsx`
 ```typescript
 <html lang="en">
   <Providers>
-    <body className={inter.className}>{children}</body>
+    <body>{children}</body>
   </Providers>
 </html>
 ```
@@ -105,4 +106,13 @@ Update the `.prettierrc` file with the addition of
 {
   "plugins": ["prettier-plugin-tailwindcss"]
 }
+```
+
+## ShadCN
+
+Install the package
+
+```bash
+npx shadcn@latest init
+
 ```
