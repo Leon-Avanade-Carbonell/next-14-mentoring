@@ -114,5 +114,13 @@ Install the package
 
 ```bash
 npx shadcn@latest init
+```
 
+See the available components in the shadcn website
+[ShadCN Components](https://ui.shadcn.com/docs/components)
+
+Add shadcn components
+
+```bash
+npx shadcn@latest add button card input select
 ```
