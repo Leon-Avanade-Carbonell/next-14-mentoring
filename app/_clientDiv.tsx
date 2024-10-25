@@ -23,6 +23,19 @@ function ClientComponent() {
       })
   }
 
+  async function asyncClientPokemon() {
+    console.log('async client has started')
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/dx`)
+      const data = await response.json()
+
+      console.table(data)
+    } catch (err) {
+      console.log('I was caught as an error')
+      console.log(err)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <Input
@@ -34,7 +47,8 @@ function ClientComponent() {
         disabled={disableClient}
         onClick={() => {
           console.log('I was pressed client side')
-          clientPokemon()
+          //   clientPokemon()
+          asyncClientPokemon()
         }}
       >
         This is the CLIENT side button
